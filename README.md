@@ -1,2 +1,3 @@
 # BreakdownBuddy
-This project is based on Vehicle Roadside breakdown assistant app. It is based on real time location and helps in searching for nearest mechanics and emergency services in case of accidents or to report an injury. 
+
+"Breakdown Buddy" is your trusted companion for unexpected roadside emergencies. This intuitive app connects drivers with immediate assistance and support when their vehicle breaks down. With a simple tap, users can request help, track their assistance in real-time, and receive updates on the status of their rescue. Breakdown Buddy ensures peace of mind on the road, providing fast and reliable service whenever you need it most.
