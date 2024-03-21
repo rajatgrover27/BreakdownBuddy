@@ -1,7 +1,11 @@
+import 'package:breakdown_assistant/mechanicScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as location_package;
+import 'package:geocoding/geocoding.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:breakdown_assistant/mechanicScreen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -11,16 +15,26 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  bool showBottomMenu = false;
   GoogleMapController? mapController;
-  Location location = Location();
+  location_package.Location location = location_package.Location();
   LatLng? _initialLocation;
+  String? _currentAddress;
+  Marker? _marker;
   String appBarText = "Current Location: Loading...";
 
   @override
   void initState() {
     super.initState();
     _getUserLocation();
+  }
+
+  void _launchCall(String phoneNumber) async {
+    String url = 'tel:$phoneNumber';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   // Get the current user's location
@@ -30,8 +44,36 @@ class _MapScreenState extends State<MapScreen> {
       setState(() {
         _initialLocation =
             LatLng(userLocation.latitude!, userLocation.longitude!);
-        appBarText = "Current Location: ${userLocation.latitude}, ${userLocation.longitude}";
+        _getAddressFromLatLng(_initialLocation!);
+        _marker = Marker(
+          markerId: MarkerId("current_location"),
+          position: _initialLocation!,
+          draggable: true,
+          onDragEnd: (newPosition) {
+            _getAddressFromLatLng(newPosition);
+          },
+        );
       });
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  // Get the address from latitude and longitude coordinates
+  void _getAddressFromLatLng(LatLng latLng) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        latLng.latitude,
+        latLng.longitude,
+      );
+      if (placemarks != null && placemarks.isNotEmpty) {
+        Placemark currentAddress = placemarks[0];
+        setState(() {
+          _currentAddress =
+              "${currentAddress.name},${currentAddress.street}, ${currentAddress.locality}";
+          appBarText = "$_currentAddress";
+        });
+      }
     } catch (e) {
       print('Error: $e');
     }
@@ -44,7 +86,26 @@ class _MapScreenState extends State<MapScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(appBarText),
+          title: Container(
+            padding: EdgeInsets.all(8.0),
+            width: 450,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.black,
+                  width: 2.0,
+                ),
+              ),
+            ),
+            child: Text(
+              appBarText,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
+          ),
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
@@ -62,16 +123,19 @@ class _MapScreenState extends State<MapScreen> {
             _initialLocation == null
                 ? Center(child: CircularProgressIndicator())
                 : GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: _initialLocation!,
-                zoom: 15,
-              ),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                mapController = controller;
-              },
-            ),
+                    initialCameraPosition: CameraPosition(
+                      target: _initialLocation!,
+                      zoom: 15,
+                    ),
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    onMapCreated: (GoogleMapController controller) {
+                      mapController = controller;
+                    },
+                    markers: _marker != null
+                        ? Set<Marker>.from([_marker!])
+                        : Set<Marker>(),
+                  ),
             Positioned(
               bottom: 80.0,
               left: MediaQuery.of(context).size.width / 4 - 75,
@@ -87,7 +151,9 @@ class _MapScreenState extends State<MapScreen> {
                       ],
                     )),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _launchCall('102');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
@@ -119,7 +185,9 @@ class _MapScreenState extends State<MapScreen> {
                       Colors.red[900]!,
                     ])),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _launchCall('100');
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
@@ -150,7 +218,12 @@ class _MapScreenState extends State<MapScreen> {
                         Colors.blue
                       ])),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MechanicScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shadowColor: Colors.transparent),
