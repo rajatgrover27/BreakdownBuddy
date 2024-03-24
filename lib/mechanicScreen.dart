@@ -9,7 +9,6 @@ class MechanicScreen extends StatefulWidget {
 }
 
 class _MechanicScreenState extends State<MechanicScreen> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,9 +26,226 @@ class _MechanicScreenState extends State<MechanicScreen> {
           ),
         ),
         drawer: _buildDrawer(),
-        body:
-          Text('mechanics')
+        body: SingleChildScrollView(
+          child: DataTable(
+            columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Address')),
+              DataColumn(label: Text('Call')), // Additional column for action
+            ],
+            rows: [
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              // Add more DataRow widgets for additional entries
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('John Doe')),
+                DataCell(Text('123 Main St456 Oak St456 Oak St',style: TextStyle(
+                  fontSize: 13,),)),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+              DataRow(cells: [
+                DataCell(Text('Jane Smith')),
+                DataCell(Text('456 Oak St456 Oak St456 Oak St')),
+                DataCell(IconButton(
+                  // Example of an action button
+                  icon: Icon(Icons.call),
+                  onPressed: () {
+                    // Handle edit action
+                  },
+                )),
+              ]),
+            ],
+          ),
         ),
+      ),
     );
   }
 }

@@ -1,11 +1,12 @@
+import 'package:breakdown_assistant/login.dart';
 import 'package:breakdown_assistant/mechanicScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location_package;
 import 'package:geocoding/geocoding.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:breakdown_assistant/mechanicScreen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -109,15 +110,18 @@ class _MapScreenState extends State<MapScreen> {
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
-                icon: const Icon(Icons.menu),
+                icon: const Icon(Icons.login),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreenPage()),
+                  );
                 },
               );
             },
           ),
         ),
-        drawer: _buildDrawer(),
+        drawer: _buildDrawer(context),
         body: Stack(
           children: [
             _initialLocation == null
@@ -253,12 +257,14 @@ class _MapScreenState extends State<MapScreen> {
   }
 }
 
-Widget _buildDrawer() {
+Widget _buildDrawer(BuildContext context) {
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
-        DrawerHeader(
+        Container(
+          height:80,
+          child: DrawerHeader(
           decoration: BoxDecoration(
             color: Colors.blue,
           ),
@@ -270,11 +276,6 @@ Widget _buildDrawer() {
             ),
           ),
         ),
-        ListTile(
-          title: Text('Item 1'),
-          onTap: () {
-            // Add your onTap logic here
-          },
         ),
         ListTile(
           title: Text('Item 2'),
@@ -282,7 +283,34 @@ Widget _buildDrawer() {
             // Add your onTap logic here
           },
         ),
-        // Add more ListTiles for additional items
+        Container(
+            height: 50,
+            width: 50,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreenPage(), // Replace with the screen you want to navigate to
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors
+                      .white, // Set text color to white for visibility
+                ),
+              ),
+            )),
       ],
     ),
   );

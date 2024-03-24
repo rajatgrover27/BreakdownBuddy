@@ -7,14 +7,12 @@ import 'base/themes/theme_helper.dart';
 import 'base/widgets/custom_text_form_field.dart';
 import '../../base/themes/app_decoration.dart';
 
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   SignUpScreenState createState() => SignUpScreenState();
 }
-
 
 class SignUpScreenState extends State<SignUpScreen> {
   TextEditingController firstNameController = TextEditingController();

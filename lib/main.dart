@@ -1,4 +1,6 @@
 import 'package:breakdown_assistant/login.dart';
+import 'package:breakdown_assistant/mapScreen.dart';
+import 'package:breakdown_assistant/mechanicScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
 
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreenPage(),
+      home: MapScreen(),
     );
   }
 }
