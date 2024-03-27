@@ -19,6 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController;
   location_package.Location location = location_package.Location();
   LatLng? _initialLocation;
+  LatLng? _finalLocation;
   String? _currentAddress;
   Marker? _marker;
   String appBarText = "Current Location: Loading...";
@@ -51,9 +52,13 @@ class _MapScreenState extends State<MapScreen> {
           position: _initialLocation!,
           draggable: true,
           onDragEnd: (newPosition) {
+            setState(() {
+                _finalLocation=newPosition;
+            });
             _getAddressFromLatLng(newPosition);
           },
         );
+        _finalLocation ??= _initialLocation;
       });
     } catch (e) {
       print('Error: $e');
@@ -71,7 +76,7 @@ class _MapScreenState extends State<MapScreen> {
         Placemark currentAddress = placemarks[0];
         setState(() {
           _currentAddress =
-              "${currentAddress.name},${currentAddress.street}, ${currentAddress.locality}";
+          "${currentAddress.name},${currentAddress.street}, ${currentAddress.locality}";
           appBarText = "$_currentAddress";
         });
       }
@@ -127,19 +132,19 @@ class _MapScreenState extends State<MapScreen> {
             _initialLocation == null
                 ? Center(child: CircularProgressIndicator())
                 : GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: _initialLocation!,
-                      zoom: 15,
-                    ),
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: true,
-                    onMapCreated: (GoogleMapController controller) {
-                      mapController = controller;
-                    },
-                    markers: _marker != null
-                        ? Set<Marker>.from([_marker!])
-                        : Set<Marker>(),
-                  ),
+              initialCameraPosition: CameraPosition(
+                target: _initialLocation!,
+                zoom: 15,
+              ),
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                mapController = controller;
+              },
+              markers: _marker != null
+                  ? Set<Marker>.from([_marker!])
+                  : Set<Marker>(),
+            ),
             Positioned(
               bottom: 80.0,
               left: MediaQuery.of(context).size.width / 4 - 75,
@@ -225,7 +230,10 @@ class _MapScreenState extends State<MapScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MechanicScreen()),
+                        MaterialPageRoute(builder: (context) => MechanicScreen(
+                          latitude: _finalLocation!.latitude,
+                          longitude: _finalLocation!.longitude,
+                        )),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -265,17 +273,17 @@ Widget _buildDrawer(BuildContext context) {
         Container(
           height:80,
           child: DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: Text(
-            'Drawer Menu',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'Drawer Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
             ),
           ),
-        ),
         ),
         ListTile(
           title: Text('Item 2'),
