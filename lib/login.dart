@@ -1,4 +1,5 @@
 import 'package:breakdown_assistant/signUp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'base/themes/app_decoration.dart';
@@ -117,13 +118,22 @@ class LoginScreenPageState extends State<LoginScreenPage>
                             width: 300,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        MapScreen(), // Replace with the screen you want to navigate to
-                                  ),
-                                );
+                                FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                        email: emailController.text,
+                                        password: passwordController.text)
+                                    .then((value) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          MapScreen(), // Replace with the screen you want to navigate to
+                                    ),
+                                  );
+                                }).catchError((error) {
+                                  _showErrorSnackBar(
+                                      context, "Invalid login details");
+                                });
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blue,
@@ -182,4 +192,9 @@ class LoginScreenPageState extends State<LoginScreenPage>
       ),
     );
   }
+}
+
+void _showErrorSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(content: Text(message));
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

@@ -53,7 +53,7 @@ class _MapScreenState extends State<MapScreen> {
           draggable: true,
           onDragEnd: (newPosition) {
             setState(() {
-                _finalLocation=newPosition;
+              _finalLocation = newPosition;
             });
             _getAddressFromLatLng(newPosition);
           },
@@ -76,7 +76,7 @@ class _MapScreenState extends State<MapScreen> {
         Placemark currentAddress = placemarks[0];
         setState(() {
           _currentAddress =
-          "${currentAddress.name},${currentAddress.street}, ${currentAddress.locality}";
+              "${currentAddress.name},${currentAddress.street}, ${currentAddress.locality}";
           appBarText = "$_currentAddress";
         });
       }
@@ -87,8 +87,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double threshold = 1000;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -132,19 +130,19 @@ class _MapScreenState extends State<MapScreen> {
             _initialLocation == null
                 ? Center(child: CircularProgressIndicator())
                 : GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: _initialLocation!,
-                zoom: 15,
-              ),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                mapController = controller;
-              },
-              markers: _marker != null
-                  ? Set<Marker>.from([_marker!])
-                  : Set<Marker>(),
-            ),
+                    initialCameraPosition: CameraPosition(
+                      target: _initialLocation!,
+                      zoom: 15,
+                    ),
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    onMapCreated: (GoogleMapController controller) {
+                      mapController = controller;
+                    },
+                    markers: _marker != null
+                        ? Set<Marker>.from([_marker!])
+                        : Set<Marker>(),
+                  ),
             Positioned(
               bottom: 80.0,
               left: MediaQuery.of(context).size.width / 4 - 75,
@@ -230,10 +228,11 @@ class _MapScreenState extends State<MapScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MechanicScreen(
-                          latitude: _finalLocation!.latitude,
-                          longitude: _finalLocation!.longitude,
-                        )),
+                        MaterialPageRoute(
+                            builder: (context) => MechanicScreen(
+                                  latitude: _finalLocation!.latitude,
+                                  longitude: _finalLocation!.longitude,
+                                )),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -271,7 +270,7 @@ Widget _buildDrawer(BuildContext context) {
       padding: EdgeInsets.zero,
       children: <Widget>[
         Container(
-          height:80,
+          height: 80,
           child: DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
@@ -299,7 +298,8 @@ Widget _buildDrawer(BuildContext context) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginScreenPage(), // Replace with the screen you want to navigate to
+                    builder: (context) =>
+                        LoginScreenPage(), // Replace with the screen you want to navigate to
                   ),
                 );
               },
@@ -314,8 +314,7 @@ Widget _buildDrawer(BuildContext context) {
                 'Login',
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors
-                      .white, // Set text color to white for visibility
+                  color: Colors.white, // Set text color to white for visibility
                 ),
               ),
             )),

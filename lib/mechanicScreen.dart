@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 
 class TomTomApi {
   static const String apiKey = 'e0sHgBKJi3hDiMxWTvcGbvnRgJUQL6ar';
@@ -100,52 +99,11 @@ class _MechanicScreenState extends State<MechanicScreen> {
                 return Card(
                   surfaceTintColor: Colors.lightBlue,
                   child: ListTile(
-                    title: Text(mechanic.name),
-                    subtitle: Text(mechanic.address),
-                    trailing: IconButton(
-                      icon: Icon(Icons.call),
-                      onPressed: () {
-                      },
-                    ),
-                  ),
+                      title: Text(mechanic.name),
+                      subtitle: Text(mechanic.address)),
                 );
               },
             ),
     );
   }
-}
-
-Widget _buildDrawer() {
-  return Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: Text(
-            'Drawer Menu',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-            ),
-          ),
-        ),
-        ListTile(
-          title: Text('Item 1'),
-          onTap: () {
-            // Add your onTap logic here
-          },
-        ),
-        ListTile(
-          title: Text('Item 2'),
-          onTap: () {
-            // Add your onTap logic here
-          },
-        ),
-        // Add more ListTiles for additional items
-      ],
-    ),
-  );
 }

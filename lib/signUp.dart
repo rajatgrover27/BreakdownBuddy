@@ -2,10 +2,13 @@ import 'package:breakdown_assistant/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'base/themes/custom_text_style.dart';
 import 'base/themes/theme_helper.dart';
 import 'base/widgets/custom_text_form_field.dart';
 import '../../base/themes/app_decoration.dart';
+import "database.dart";
+import "package:firebase_auth/firebase_auth.dart";
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -236,14 +239,31 @@ class SignUpScreenState extends State<SignUpScreen> {
                               height: 50,
                               width: 300,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginScreenPage(), // Replace with the screen you want to navigate to
-                                    ),
-                                  );
+                                onPressed: () async {
+                                  String Id = randomAlphaNumeric(10);
+                                  Map<String, dynamic> userInfoMap = {
+                                    "FirstName": firstNameController.text,
+                                    "LastName": lastNameController.text,
+                                    "UserName": usernameController.text,
+                                    "Password": passwordController.text,
+                                    "Email": emailController.text,
+                                    "Id": Id,
+                                  };
+                                  await DatabaseMethod()
+                                      .addUserDetails(userInfoMap, Id);
+                                  FirebaseAuth.instance
+                                      .createUserWithEmailAndPassword(
+                                          email: emailController.text,
+                                          password: passwordController.text)
+                                      .then((value) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginScreenPage()));
+                                  }).onError((error, stackTrace) {
+                                    print("Error ${(error.toString())}");
+                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.blue,
